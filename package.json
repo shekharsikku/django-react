@@ -1,0 +1,13 @@
+{
+  "name": "django-react",
+  "version": "1.0.0",
+  "description": "Django & React Full Stack Web App.",
+  "main": "/music/frontend/src/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run --prefix ./music/frontend dev\" \"python music/manage.py runserver\"",
+    "start": "concurrently \"npm run --prefix ./client preview\" \"python server/main.py\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
