@@ -1,0 +1,9 @@
+# virtual environment and editor directories
+.venv
+.idea
+.vscode
+
+# python cache and django migrations files 
+__pycache__
+__init__.py
+migrations
