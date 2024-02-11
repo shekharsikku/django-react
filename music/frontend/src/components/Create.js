@@ -9,9 +9,10 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import useStyles from '../styles';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Create = () => {
+  const navigate = useNavigate();
   const classes = useStyles();
   const defaultVotes = 1;
 
@@ -26,7 +27,8 @@ const Create = () => {
     setGuestCanPause(e.target.value === "true" ? true : false);
   };
 
-  const handleRoomCreate = () => {
+  const handleRoomCreate = async (e) => {
+    e.preventDefault();
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -35,10 +37,15 @@ const Create = () => {
         guest_can_pause: guestCanPause,
       }),
     };
-    fetch("/api/create-room", requestOptions)
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error.message));
+
+    try {
+      const response = await fetch("/api/create-room", requestOptions)
+      const data = await response.json();
+      console.log(data);
+      navigate(`/room/${data.code}`);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (

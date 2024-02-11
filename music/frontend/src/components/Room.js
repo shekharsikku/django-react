@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-const Room = (props) => {
+const Room = () => {
   const [roomDetails, setRoomDetails] = useState({
     votesToSkip: 1,
     guestCanPause: false,
     isHost: false,
   });
 
-  const roomCode = props.match.params.roomCode;
+  const { roomCode } = useParams();
 
   useEffect(() => {
     const getRoomDetails = async () => {
@@ -21,7 +22,7 @@ const Room = (props) => {
           isHost: data.is_host,
         });
       } catch (error) {
-        console.error("Error fetching room details:", error);
+        console.error("Error fetching room details:", error.message);
       }
     };
 
