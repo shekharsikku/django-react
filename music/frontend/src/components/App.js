@@ -1,11 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import Join from "./Join";
 import Create from "./Create";
 import Room from "./Room";
 
-export default function App() {
+const App = () => {
   return (
     <Router>
       <Routes>
@@ -17,3 +17,5 @@ export default function App() {
     </Router>
   );
 }
+
+export default App;
