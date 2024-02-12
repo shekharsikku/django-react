@@ -5,4 +5,9 @@ export default makeStyles((theme) => ({
     color: 'coral',
     fontWeight: '600',
   },
+  alert: {
+    position: 'absolute',
+    top: '0',
+    right: '0',
+  },
 }));
