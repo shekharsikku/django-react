@@ -5,7 +5,7 @@ from .credentials import CLIENT_ID, CLIENT_SECRET
 from requests import post, put, get
 
 
-# BASE_URL = "https://api.spotify.com/v1/me/"
+BASE_URL = "https://api.spotify.com/v1/me/"
 
 
 def get_user_tokens(session_id):
@@ -59,4 +59,22 @@ def refresh_spotify_token(session_id):
     refresh_token = response.get('refresh_token')
 
     update_or_create_user_tokens(session_id, access_token, token_type, expires_in, refresh_token)
+    
+
+def execute_spotify_api_request(session_id, endpoint, get_=False, post_=False, put_=False):
+    tokens = get_user_tokens(session_id)
+    headers = {'Content-Type': 'application/json',
+               'Authorization': "Bearer " + tokens.access_token}
+    if get_:
+        get(BASE_URL + endpoint, headers=headers)
+    elif post_:
+        post(BASE_URL + endpoint, headers=headers)
+    elif put_:
+        put(BASE_URL + endpoint, headers=headers)
+
+    response = get(BASE_URL + endpoint, {}, headers=headers)
+    try:
+        return response.json()
+    except:
+        return {'Error': 'Issue with request'}
     

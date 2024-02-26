@@ -13,6 +13,7 @@ const Room = () => {
 
   const [showSettings, setShowSettings] = useState(false);
   const [spotifyAuthenticated, setSpotifyAuthenticated] = useState(false);
+  const [song, setSong] = useState({});
 
   const { roomCode } = useParams();
   const classes = useStyles();
@@ -30,9 +31,14 @@ const Room = () => {
         guestCanPause: data.guest_can_pause,
         isHost: data.is_host,
       });
-      if (roomDetails.isHost) {
-        authenticateSpotify();
-      }
+      // if (roomDetails.isHost) {
+      //   const res = authenticateSpotify();
+      //   if (res) {
+      //     setTimeout(() => {
+      //       getCurrentSong();
+      //     }, 1000);
+      //   }
+      // }
     } catch (error) {
       console.error("Error fetching room details:", error.message);
     }
@@ -41,6 +47,21 @@ const Room = () => {
   useEffect(() => {
     getRoomDetails();
   }, [roomCode, spotifyAuthenticated]);
+
+  const getCurrentSong = async () => {
+    try {
+      const response = await fetch('/spotify/current-song');
+      if (response.ok) {
+        const data = await response.json();
+        setSong(data);
+        console.log(song);
+      } else {
+        return {};
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   const authenticateSpotify = async () => {
     try {
