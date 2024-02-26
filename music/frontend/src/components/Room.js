@@ -3,6 +3,7 @@ import { Grid, Button, Typography } from "@material-ui/core";
 import { useParams, useNavigate } from "react-router-dom";
 import useStyles from '../styles';
 import Create from './Create';
+import Music from "./Music";
 
 const Room = () => {
   const [roomDetails, setRoomDetails] = useState({
@@ -31,14 +32,9 @@ const Room = () => {
         guestCanPause: data.guest_can_pause,
         isHost: data.is_host,
       });
-      // if (roomDetails.isHost) {
-      //   const res = authenticateSpotify();
-      //   if (res) {
-      //     setTimeout(() => {
-      //       getCurrentSong();
-      //     }, 1000);
-      //   }
-      // }
+      if (roomDetails.isHost) {
+        authenticateSpotify();
+      }
     } catch (error) {
       console.error("Error fetching room details:", error.message);
     }
@@ -46,22 +42,31 @@ const Room = () => {
 
   useEffect(() => {
     getRoomDetails();
+    getCurrentSong();
   }, [roomCode, spotifyAuthenticated]);
 
-  const getCurrentSong = async () => {
-    try {
-      const response = await fetch('/spotify/current-song');
-      if (response.ok) {
-        const data = await response.json();
+  useEffect(() => {
+    // componentDidMount logic
+    const interval = setInterval(getCurrentSong, 1000);
+    // componentWillUnmount logic
+    return () => clearInterval(interval);
+  }, []);
+
+
+  const getCurrentSong = () => {
+    fetch("/spotify/current-song")
+      .then((response) => {
+        if (!response.ok) {
+          return {};
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => {
         setSong(data);
-        console.log(song);
-      } else {
-        return {};
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
+        console.log(data);
+      });
+  };
 
   const authenticateSpotify = async () => {
     try {
@@ -129,6 +134,9 @@ const Room = () => {
           <Typography variant="h4" component="h4" className={classes.heading}>
             Code &#187; {roomCode}
           </Typography>
+        </Grid>
+        <Grid item xs={12} align="center">
+          <Music {...song} />
         </Grid>
         <Grid item xs={12} align="center">
           <Typography variant="h6" component="h6">

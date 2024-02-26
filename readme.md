@@ -1,28 +1,38 @@
-# Music-Controller-Web-App-Tutorial
+# Music Controller Web App
 
-**The code for "Django & React Full Stack Web App"**
+**Full Stack Web App using Django & React**
 
 ## Setup Instructions
 
-### Install Required Python Modules
+### Create Virtual Environment
 
 ```bash
-pip install -r requirements.txt
+python -m venv (virtual environment name)
 ```
+
+### Activate Virtual Environment
+
+```bash
+source (virtual environment name)/Scripts/activate
+```
+
+### Install Required Modules
+
+```bash
+python -m pip install -r requirements.txt
+```
+
 ### Start Web Server
 
 To start the web server you need to run the following sequence of commands.
-
-First cd into your desired tutorial folder (replace x with tutorial number).
 ```bash 
-cd "Tutorial x"
+cd music
 ```
+
 Next run the django web server.
 ```bash
 python manage.py runserver
 ```
-
-### [Install Node.js](https://nodejs.org/en/)
 
 ### Install Node Modules
 
@@ -30,7 +40,7 @@ First cd into the ```frontend``` folder.
 ```bash
 cd frontend
 ```
-Next install all dependicies.
+Next install all dependencies.
 ```bash
 npm i
 ```

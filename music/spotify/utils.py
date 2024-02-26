@@ -1,7 +1,7 @@
+from .credentials import CLIENT_ID, CLIENT_SECRET
 from .models import SpotifyToken
 from django.utils import timezone
 from datetime import timedelta
-from .credentials import CLIENT_ID, CLIENT_SECRET
 from requests import post, put, get
 
 
@@ -75,6 +75,6 @@ def execute_spotify_api_request(session_id, endpoint, get_=False, post_=False, p
     response = get(BASE_URL + endpoint, {}, headers=headers)
     try:
         return response.json()
-    except:
+    except Exception:
         return {'Error': 'Issue with request'}
     
